@@ -517,6 +517,6 @@ Socket.prototype._trySetAllowAddressReuse = function () {
   }
 
   function setAllowAddressReuse (callback) {
-    chrome.sockets.udp.setAllowAddressReuse(self.id, this, callback)
+    chrome.sockets.udp.setAllowAddressReuse(self.id, true, callback)
   }
 }
