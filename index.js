@@ -108,6 +108,8 @@ function Socket (options, listener) {
   self._destroyed = false
   self._bindState = BIND_STATE_UNBOUND
   self._bindTasks = []
+
+  self._trySetAllowAddressReuse()
 }
 
 /**
@@ -499,4 +501,22 @@ Socket.prototype.unref = function () {
 
 Socket.prototype.ref = function () {
   // No chrome.sockets equivalent
+}
+
+/**
+ * Internal function to enable address reuse if the feature is present
+ */
+Socket.prototype._trySetAllowAddressReuse = function () {
+  const self = this
+
+  if (chrome.sockets.udp.setAllowAddressReuse) {
+    self._bindTasks.push({
+      fn: setAllowAddressReuse,
+      callback: function () {}
+    })
+  }
+
+  function setAllowAddressReuse (callback) {
+    chrome.sockets.udp.setAllowAddressReuse(self.id, this, callback)
+  }
 }
