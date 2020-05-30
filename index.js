@@ -105,7 +105,7 @@ function Socket (options, listener) {
 
   if (typeof listener === 'function') self.on('message', listener)
 
-	self._reuseAddr = options.reuseAddr
+  self._reuseAddr = options.reuseAddr
 
   self._destroyed = false
   self._bindState = BIND_STATE_UNBOUND
@@ -149,8 +149,8 @@ Socket.prototype.bind = function (port, address, callback) {
 
   if (typeof callback === 'function') self.once('listening', callback)
 
-	var createOptions = {}
-	if(self._reuseAddr) createSocket.allowAddressReuse = true
+  var createOptions = {}
+  if (self._reuseAddr) createOptions.allowAddressReuse = true
 
   chrome.sockets.udp.create(createOptions, function (createInfo) {
     self.id = createInfo.socketId
